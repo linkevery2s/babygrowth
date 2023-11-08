@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<title>海外安全情報データベース</title>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta property="og:title" content="海外安全情報" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./ogp.png" />
+  <meta name="description" content="このデータベースは、海外旅行者向けの情報提供を目的としたプラットフォームです。各国の政治、治安、自然災害情報を提供し、旅行計画の際にリスクを最小限に抑える支援を提供します。安全と楽しさを両立させるための頼りになるパートナーです。" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="海外安全情報" />
+  <meta name="twitter:image" content="./ogp.png" />
+  <meta name="author" content="仁志">
+  <meta name="keywords" content="海外,旅行,安全"/>
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="images/apple-touch-icon.png">
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body{
+      font-family: "Meiryo","Hiragino Maru Gothic Pro",sans-serif;
+      background-attachment: fixed;
+      background-image: url("./back.jpg");
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* iOS用  */
+    body::before{
+      content:"";
+      display:block;
+      position:fixed;
+      top:0;
+      left:0;
+      z-index:-1;
+      width:100%;
+      height:100vh;
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-image:url("./back.jpg");
+      background-size: cover;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    .container{
+      background: rgba(255,255,255,0.7);
+      width: 90%;
+      max-width: 650px;
+      padding:0;
+      margin: 0;
+
+    }
+
+    li {
+      width: 95%;
+      margin: 0;
+      line-height: 2em;
+      padding: 0.5em;
+      text-align: left;
+      list-style: none;
+      border-top: 1px #000 solid;
+    }
+
+    li {
+      background: rgba(231, 96, 158 ,0.6);
+    }
+
+    h1{
+      margin:0;
+    }
+
+    @media screen and (min-width: 768px){
+      h1 br{display:none;}
+    }
+
+  </style>
+
+  <script type="module">
+    onload = async () => {
+
+      const res = await fetch("https://script.google.com/macros/s/AKfycbzmfHUfg_lElZRqDVebQBzEfYkk1o5X0U2ntMeclHvc2ic9DG8bmAnKE6z09uPDDORW_g/exec");
+      const data = await res.json();
+
+      console.log(data);
+
+      console.log(data.length)
+
+      info.innerHTML = "";
+
+      for (let i = 0; i < data.length; i++){
+
+        let image_url = data[i].image.split("=");
+
+        console.log(image_url[1]);
+
+        let dd = new Date(data[i].date);
+
+        console.log(dd.toLocaleString());
+
+        let day = dd.toLocaleString();
+
+        day = day.split("/")[0] + "年" + day.split("/")[1] + "月" + day.split("/")[2].split(" ")[0] + "日";
+
+        info.innerHTML += "<li><h3>" + data[i].week + "</h3>" + day + "<br>" + data[i].description + "<br><img src='https://drive.google.com/uc?export=view&id=" + image_url[1] + "' onerror='this.remove()' width='100%'>" + "</li>"; 
+
+      }
+
+
+    }
+  </script>
+</head>
+
+<body>
+  <center>
+    <div class="container">
+
+      <h1>すくすく赤ちゃん<br>成長記録</h1>
+
+      <ul>
+        <div id="info"></div>
+      </ul>
+
+    </div>
+  </center>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPP84V2NHB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-MPP84V2NHB');
+  </script>
+
+</body>
+
+</html>
